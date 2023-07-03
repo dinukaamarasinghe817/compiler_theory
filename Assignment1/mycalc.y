@@ -84,7 +84,6 @@ stmt: TINT TID {
         if (symTable[index].type == $3.type) {
             if(symTable[index].type == 0){
                 $1.value.int_val = $3.value.int_val;
-                printf("type %d\n",$3.type);
             }else{
                 $1.value.float_val = $3.value.float_val;
             }
@@ -94,10 +93,11 @@ stmt: TINT TID {
     } else {
         fprintf(stderr, "Line x: %s is used but is not declared\n", $1.name);
     }
-
+    printf("after printing %d\n",$1.type);
+    printf("value after printing %d\n",$1.value.int_val);
 }
 | TPRINTVAR TID {
-    printf("this is type when printing %d",$2.type);
+    printf("this is type when printing %d\n",$2.type);
     if($2.type == 0){
         printf("%d\n",$2.value.int_val);
     }else{
@@ -107,6 +107,9 @@ stmt: TINT TID {
 
 expr: TINTVAL {
     $$ = (struct exptr) { .type = 0, .value.int_val = $1 };
+    printf("vlaue of intvlaue %d\n",$1);
+    printf("type of expressionvlaue %d\n",$$.type);
+    printf("value of expressionvlaue %d\n",$$.value.int_val);
 }
 | TFLOATVAL {
     $$ = (struct exptr) { .type = 1, .value.float_val = $1 };
