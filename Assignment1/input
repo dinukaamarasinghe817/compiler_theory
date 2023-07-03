@@ -1,1 +1,1 @@
-main() {int x; x = 504; printvar x;} 
+main() {float x; x = 3.45; printvar x;}

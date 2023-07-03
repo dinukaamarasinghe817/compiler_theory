@@ -68,9 +68,7 @@ extern int yydebug;
     TADD = 269,                    /* TADD  */
     TMULT = 270,                   /* TMULT  */
     TOK_MUL = 271,                 /* TOK_MUL  */
-    TOK_DIV = 272,                 /* TOK_DIV  */
-    TOK_ADD = 273,                 /* TOK_ADD  */
-    TOK_SUB = 274                  /* TOK_SUB  */
+    TOK_ADD = 272                  /* TOK_ADD  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -79,7 +77,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "mycalc.y"
+#line 27 "mycalc.y"
 
 int int_val;
 float float_val;
@@ -99,7 +97,7 @@ struct exptr{
         } value;
     } expr_type;
 
-#line 103 "mycalc.tab.h"
+#line 101 "mycalc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

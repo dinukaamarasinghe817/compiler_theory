@@ -15,7 +15,7 @@ sudo apt-get install flex bison make
 For macOS, you can install Flex and Bison using Homebrew. Run the following commands:
 ```
 brew install flex
-brew install bison
+brew install bisonmak
 brew install make
 ```
 
