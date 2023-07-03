@@ -97,11 +97,26 @@ stmt: TINT TID {
     printf("value after printing %d\n",$1.value.int_val);
 }
 | TPRINTVAR TID {
-    printf("this is type when printing %d\n",$2.type);
-    if($2.type == 0){
-        printf("%d\n",$2.value.int_val);
+    int found = 0;
+    int index = -1;
+    for (int i = 0; i < sym_count; i++) {
+        if (strcmp(symTable[i].name, $2.name) == 0) {
+            found = 1;
+            index = i;
+            break;
+        }
+    }
+
+    if (found) {
+        printf("this is type when printing %s : %d\n",$2.name,$2.type);
+        printf("this is value when printing %s : %d\n",$2.name,$2.value.int_val);
+        if($2.type == 0){
+            printf("%d\n",$2.value.int_val);
+        }else{
+            printf("%f\n",$2.value.float_val);
+        }
     }else{
-        printf("%f\n",$2.value.float_val);
+        printf("variable %s has been used but not declared",$2.name);
     }
 }
 

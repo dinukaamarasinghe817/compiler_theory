@@ -527,8 +527,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58,    59,    59,    60,    66,    72,   101,   110,
-     116,   119,   147,   152
+       0,    58,    58,    59,    59,    60,    66,    72,    99,   123,
+     129,   132,   160,   165
 };
 #endif
 
@@ -1137,8 +1137,6 @@ yyreduce:
         if (symTable[index].type == (yyvsp[0].expr_type).type) {
             if(symTable[index].type == 0){
                 (yyvsp[-2].variable_type).value.int_val = (yyvsp[0].expr_type).value.int_val;
-                printf("type %d\n",(yyvsp[-2].variable_type).type);
-                printf("value %d\n",(yyvsp[-2].variable_type).value.int_val);
             }else{
                 (yyvsp[-2].variable_type).value.float_val = (yyvsp[0].expr_type).value.float_val;
             }
@@ -1151,43 +1149,58 @@ yyreduce:
     printf("after printing %d\n",(yyvsp[-2].variable_type).type);
     printf("value after printing %d\n",(yyvsp[-2].variable_type).value.int_val);
 }
-#line 1155 "mycalc.tab.c"
+#line 1153 "mycalc.tab.c"
     break;
 
   case 8: /* stmt: TPRINTVAR TID  */
-#line 101 "mycalc.y"
+#line 99 "mycalc.y"
                 {
-    printf("this is type when printing %d\n",(yyvsp[0].variable_type).type);
-    if((yyvsp[0].variable_type).type == 0){
-        printf("%d\n",(yyvsp[0].variable_type).value.int_val);
+    int found = 0;
+    int index = -1;
+    for (int i = 0; i < sym_count; i++) {
+        if (strcmp(symTable[i].name, (yyvsp[0].variable_type).name) == 0) {
+            found = 1;
+            index = i;
+            break;
+        }
+    }
+
+    if (found) {
+        printf("this is type when printing %s : %d\n",(yyvsp[0].variable_type).name,(yyvsp[0].variable_type).type);
+        printf("this is value when printing %s : %d\n",(yyvsp[0].variable_type).name,(yyvsp[0].variable_type).value.int_val);
+        if((yyvsp[0].variable_type).type == 0){
+            printf("%d\n",(yyvsp[0].variable_type).value.int_val);
+        }else{
+            printf("%f\n",(yyvsp[0].variable_type).value.float_val);
+        }
     }else{
-        printf("%f\n",(yyvsp[0].variable_type).value.float_val);
+        printf("variable %s has been used but not declared",(yyvsp[0].variable_type).name);
     }
 }
-#line 1168 "mycalc.tab.c"
+#line 1181 "mycalc.tab.c"
     break;
 
   case 9: /* expr: TINTVAL  */
-#line 110 "mycalc.y"
+#line 123 "mycalc.y"
               {
     (yyval.expr_type) = (struct exptr) { .type = 0, .value.int_val = (yyvsp[0].int_val) };
     printf("vlaue of intvlaue %d\n",(yyvsp[0].int_val));
     printf("type of expressionvlaue %d\n",(yyval.expr_type).type);
     printf("value of expressionvlaue %d\n",(yyval.expr_type).value.int_val);
 }
-#line 1179 "mycalc.tab.c"
+#line 1192 "mycalc.tab.c"
     break;
 
   case 10: /* expr: TFLOATVAL  */
-#line 116 "mycalc.y"
+#line 129 "mycalc.y"
             {
     (yyval.expr_type) = (struct exptr) { .type = 1, .value.float_val = (yyvsp[0].float_val) };
 }
-#line 1187 "mycalc.tab.c"
+#line 1200 "mycalc.tab.c"
     break;
 
   case 11: /* expr: TID  */
-#line 119 "mycalc.y"
+#line 132 "mycalc.y"
       {
     int found = 0;
     int index = -1;
@@ -1216,31 +1229,31 @@ yyreduce:
         fprintf(stderr, "Line x: %s is used but is not declared\n", (yyvsp[0].variable_type).name);
     }
 }
-#line 1220 "mycalc.tab.c"
+#line 1233 "mycalc.tab.c"
     break;
 
   case 12: /* expr: expr TADD expr  */
-#line 147 "mycalc.y"
+#line 160 "mycalc.y"
                  { 
     (yyval.expr_type).type = (yyvsp[-2].expr_type).type;
     (yyval.expr_type).value.int_val = (yyvsp[-2].expr_type).value.int_val + (yyvsp[0].expr_type).value.int_val;
     (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val + (yyvsp[0].expr_type).value.float_val;
 }
-#line 1230 "mycalc.tab.c"
+#line 1243 "mycalc.tab.c"
     break;
 
   case 13: /* expr: expr TMULT expr  */
-#line 152 "mycalc.y"
+#line 165 "mycalc.y"
                   {
     (yyval.expr_type).type = (yyvsp[-2].expr_type).type;
     (yyval.expr_type).value.int_val = (yyvsp[-2].expr_type).value.int_val * (yyvsp[0].expr_type).value.int_val;
     (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val * (yyvsp[0].expr_type).value.float_val;
 }
-#line 1240 "mycalc.tab.c"
+#line 1253 "mycalc.tab.c"
     break;
 
 
-#line 1244 "mycalc.tab.c"
+#line 1257 "mycalc.tab.c"
 
       default: break;
     }
@@ -1433,7 +1446,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 158 "mycalc.y"
+#line 171 "mycalc.y"
 
 
 void yyerror(const char* s) {
