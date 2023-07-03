@@ -84,7 +84,6 @@ stmt: TINT TID {
         if (symTable[index].type == $3.type) {
             if(symTable[index].type == 0){
                 $1.value.int_val = $3.value.int_val;
-                printf("type %d\n",$3.type);
             }else{
                 $1.value.float_val = $3.value.float_val;
             }
@@ -94,19 +93,38 @@ stmt: TINT TID {
     } else {
         fprintf(stderr, "Line x: %s is used but is not declared\n", $1.name);
     }
-
+    printf("after printing %d\n",$1.type);
+    printf("value after printing %d\n",$1.value.int_val);
 }
 | TPRINTVAR TID {
-    printf("this is type when printing %d",$2.type);
-    if($2.type == 0){
-        printf("%d\n",$2.value.int_val);
+    int found = 0;
+    int index = -1;
+    for (int i = 0; i < sym_count; i++) {
+        if (strcmp(symTable[i].name, $2.name) == 0) {
+            found = 1;
+            index = i;
+            break;
+        }
+    }
+
+    if (found) {
+        printf("this is type when printing %s : %d\n",$2.name,$2.type);
+        printf("this is value when printing %s : %d\n",$2.name,$2.value.int_val);
+        if($2.type == 0){
+            printf("%d\n",$2.value.int_val);
+        }else{
+            printf("%f\n",$2.value.float_val);
+        }
     }else{
-        printf("%f\n",$2.value.float_val);
+        printf("variable %s has been used but not declared",$2.name);
     }
 }
 
 expr: TINTVAL {
     $$ = (struct exptr) { .type = 0, .value.int_val = $1 };
+    printf("vlaue of intvlaue %d\n",$1);
+    printf("type of expressionvlaue %d\n",$$.type);
+    printf("value of expressionvlaue %d\n",$$.value.int_val);
 }
 | TFLOATVAL {
     $$ = (struct exptr) { .type = 1, .value.float_val = $1 };
