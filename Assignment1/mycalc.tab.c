@@ -76,6 +76,7 @@ extern int yylex();
 extern int yylineno;
 extern char* yytext;
 void yyerror(const char* s);
+int findRecord(const char* name);
 
 // Symbol table entry structure
 struct symEntry {
@@ -86,9 +87,12 @@ struct symEntry {
 
 // Symbol table
 struct symEntry symTable[100];
-int sym_count = 0;
 
-#line 92 "mycalc.tab.c"
+int sym_count = 0;
+int indexer = -1;
+
+
+#line 96 "mycalc.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -526,8 +530,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    60,    60,    61,    69,    77,   106,   130,
-     136,   142,   170,   175
+       0,    59,    59,    60,    60,    61,    69,    77,    93,   105,
+     108,   111,   128,   137
 };
 #endif
 
@@ -1107,7 +1111,7 @@ yyreduce:
     sym_count++;
     //printf("after declaring %d\n",$2.type);
 }
-#line 1111 "mycalc.tab.c"
+#line 1115 "mycalc.tab.c"
     break;
 
   case 6: /* stmt: TFLOAT TID  */
@@ -1120,148 +1124,114 @@ yyreduce:
     sym_count++;
     //printf("after declaring %d\n",$2.type);
 }
-#line 1124 "mycalc.tab.c"
+#line 1128 "mycalc.tab.c"
     break;
 
   case 7: /* stmt: TID TASSIGN expr  */
 #line 77 "mycalc.y"
                    {
-    int found = 0;
-    int index = -1;
-    for (int i = 0; i < sym_count; i++) {
-        if (strcmp(symTable[i].name, (yyvsp[-2].variable_type).name) == 0) {
-            found = 1;
-            index = i;
-            break;
-        }
-    }
-
-    if (found) {
-        if (symTable[index].type == (yyvsp[0].expr_type).type) {
+    if (findRecord((yyvsp[-2].variable_type).name)) {
+        if (symTable[indexer].type == (yyvsp[0].expr_type).type) {
             //$1.type = $3.type;
-            if(symTable[index].type == 0){
-                *(int*)symTable[index].address = (yyvsp[0].expr_type).value.int_val;
+            if(symTable[indexer].type == 0){
+                *(int*)symTable[indexer].address = (yyvsp[0].expr_type).value.int_val;
             }else{
-                *(float*)symTable[index].address = (yyvsp[0].expr_type).value.float_val;
+                *(float*)symTable[indexer].address = (yyvsp[0].expr_type).value.float_val;
             }
         } else {
-            fprintf(stderr, "Line x: cannot assing type of %d to type of %d\n",(yyvsp[0].expr_type).type, symTable[index].type);
+            fprintf(stderr, "Line x: cannot assing type of '%s' to type of '%s'\n",(yyvsp[0].expr_type).type == 0 ? "int" : "float", symTable[indexer].type == 0 ? "int" : "float");
         }
     } else {
-        fprintf(stderr, "Line x: %s is used but is not declared\n", (yyvsp[-2].variable_type).name);
+        fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[-2].variable_type).name);
     }
-    //printf("variable type after assigning %d\n",$1.type);
-    //printf("expression type after assigning %d\n",$3.type);
-    //printf("value after assigning %d\n",*(int*)symTable[index].address);
 }
-#line 1158 "mycalc.tab.c"
+#line 1149 "mycalc.tab.c"
     break;
 
   case 8: /* stmt: TPRINTVAR TID  */
-#line 106 "mycalc.y"
+#line 93 "mycalc.y"
                 {
-    int found = 0;
-    int index = -1;
-    for (int i = 0; i < sym_count; i++) {
-        if (strcmp(symTable[i].name, (yyvsp[0].variable_type).name) == 0) {
-            found = 1;
-            index = i;
-            break;
-        }
-    }
-
-    if (found) {
-        // printf("this is type when printing %s : %d\n",$2.name,$2.type);
-        // printf("this is value when printing %s : %d\n",$2.name,$2.value.int_val);
-        if(symTable[index].type == 0){
-            printf("%d\n",*(int*)symTable[index].address);
+    if (findRecord((yyvsp[0].variable_type).name)) {
+        if(symTable[indexer].type == 0){
+            printf("%d\n",*(int*)symTable[indexer].address);
         }else{
-            printf("%f\n",*(float*)symTable[index].address);
+            printf("%f\n",*(float*)symTable[indexer].address);
         }
     }else{
-        printf("variable %s has been used but not declared",(yyvsp[0].variable_type).name);
+        fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[0].variable_type).name);
     }
 }
-#line 1186 "mycalc.tab.c"
+#line 1165 "mycalc.tab.c"
     break;
 
   case 9: /* expr: TINTVAL  */
-#line 130 "mycalc.y"
+#line 105 "mycalc.y"
               {
     (yyval.expr_type) = (struct exptr) { .type = 0, .value.int_val = (yyvsp[0].int_val) };
-    //printf("vlaue of intvlaue %d\n",$1);
-    //printf("type of expressionvlaue %d\n",$$.type);
-    //printf("value of expressionvlaue %d\n",$$.value.int_val);
 }
-#line 1197 "mycalc.tab.c"
+#line 1173 "mycalc.tab.c"
     break;
 
   case 10: /* expr: TFLOATVAL  */
-#line 136 "mycalc.y"
+#line 108 "mycalc.y"
             {
     (yyval.expr_type) = (struct exptr) { .type = 1, .value.float_val = (yyvsp[0].float_val) };
-    //printf("vlaue of intvlaue %f\n",$1);
-    //printf("type of expressionvlaue %d\n",$$.type);
-    //printf("value of expressionvlaue %f\n",$$.value.float_val);
 }
-#line 1208 "mycalc.tab.c"
+#line 1181 "mycalc.tab.c"
     break;
 
   case 11: /* expr: TID  */
-#line 142 "mycalc.y"
+#line 111 "mycalc.y"
       {
-    int found = 0;
-    int index = -1;
-    for (int i = 0; i < sym_count; i++) {
-        if (strcmp(symTable[i].name, (yyvsp[0].variable_type).name) == 0 && symTable[i].type == (yyvsp[0].variable_type).type) {
-            found = 1;
-            index = i;
-            break;
-        }
-    }
-
-    if(found){
-        if(symTable[index].type == 0){
+    if(findRecord((yyvsp[0].variable_type).name)){
+        if(symTable[indexer].type == 0){
             (yyval.expr_type) = (struct exptr) { 
-                .type = symTable[index].type, 
-                .value.int_val = *(int*)symTable[index].address
+                .type = symTable[indexer].type, 
+                .value.int_val = *(int*)symTable[indexer].address
             };
         }else{
             (yyval.expr_type) = (struct exptr) { 
-                .type = symTable[index].type, 
-                .value.float_val = *(float*)symTable[index].address
+                .type = symTable[indexer].type, 
+                .value.float_val = *(float*)symTable[indexer].address
             };
         }
-        printf("type here %d",(yyvsp[0].variable_type).type);
     }else{
-        fprintf(stderr, "Line x: %s is used but is not declared\n", (yyvsp[0].variable_type).name);
+        fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[0].variable_type).name);
     }
 }
-#line 1241 "mycalc.tab.c"
+#line 1203 "mycalc.tab.c"
     break;
 
   case 12: /* expr: expr TADD expr  */
-#line 170 "mycalc.y"
-                 { 
-    (yyval.expr_type).type = (yyvsp[-2].expr_type).type;
-    (yyval.expr_type).value.int_val = (yyvsp[-2].expr_type).value.int_val + (yyvsp[0].expr_type).value.int_val;
-    (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val + (yyvsp[0].expr_type).value.float_val;
+#line 128 "mycalc.y"
+                 { // E + E
+    if((yyvsp[-2].expr_type).type != (yyvsp[0].expr_type).type){
+        fprintf(stderr, "Line %d: invalid type of operands '%s' + '%s'\n",yylineno, (yyvsp[-2].expr_type).type == 0 ? "int" : "float", (yyvsp[0].expr_type).type == 0 ? "int" : "float");
+    }else{
+        (yyval.expr_type).type = (yyvsp[-2].expr_type).type;
+        (yyval.expr_type).value.int_val = (yyvsp[-2].expr_type).value.int_val + (yyvsp[0].expr_type).value.int_val;
+        (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val + (yyvsp[0].expr_type).value.float_val;
+    }
 }
-#line 1251 "mycalc.tab.c"
+#line 1217 "mycalc.tab.c"
     break;
 
   case 13: /* expr: expr TMULT expr  */
-#line 175 "mycalc.y"
-                  {
-    (yyval.expr_type).type = (yyvsp[-2].expr_type).type;
-    (yyval.expr_type).value.int_val = (yyvsp[-2].expr_type).value.int_val * (yyvsp[0].expr_type).value.int_val;
-    (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val * (yyvsp[0].expr_type).value.float_val;
+#line 137 "mycalc.y"
+                  { // E * E
+    if((yyvsp[-2].expr_type).type != (yyvsp[0].expr_type).type){
+        fprintf(stderr, "Line %d: invalid type of operands '%s' * '%s'\n",yylineno, (yyvsp[-2].expr_type).type == 0 ? "int" : "float", (yyvsp[0].expr_type).type == 0 ? "int" : "float");
+    }else{
+        (yyval.expr_type).type = (yyvsp[-2].expr_type).type;
+        (yyval.expr_type).value.int_val = (yyvsp[-2].expr_type).value.int_val * (yyvsp[0].expr_type).value.int_val;
+        (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val * (yyvsp[0].expr_type).value.float_val;
+    }
 }
-#line 1261 "mycalc.tab.c"
+#line 1231 "mycalc.tab.c"
     break;
 
 
-#line 1265 "mycalc.tab.c"
+#line 1235 "mycalc.tab.c"
 
       default: break;
     }
@@ -1454,11 +1424,21 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 181 "mycalc.y"
+#line 147 "mycalc.y"
 
 
 void yyerror(const char* s) {
     fprintf(stderr, "Syntax Error at line %d: %s\n", yylineno, s);
+}
+
+int findRecord(const char* name) {
+    for (int i = 0; i < sym_count; i++) {
+        if (strcmp(symTable[i].name, name) == 0) {
+            indexer = i;
+            return 1;
+        }
+    }
+    return 0;
 }
 
 int main(int argc, char** argv) {
@@ -1467,6 +1447,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     
+    // open the file
     FILE* inputFile = fopen(argv[1], "r");
     if (!inputFile) {
         fprintf(stderr, "Error opening input file: %s\n", argv[1]);
@@ -1478,11 +1459,9 @@ int main(int argc, char** argv) {
     
     fclose(inputFile);
 
-    // Free memory in the symbol table
+    // Free up the space on symbol table
     for (int i = 0; i < sym_count; i++) {
         free(symTable[i].address);
     }
     return 0;
 }
-
-

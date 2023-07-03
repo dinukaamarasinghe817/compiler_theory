@@ -77,16 +77,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 27 "mycalc.y"
+#line 31 "mycalc.y"
 
 int int_val;
 float float_val;
 struct{
     int type;
-    union{
-        int int_val;
-        float float_val;
-        } value;
     char* name;
     } variable_type;
 struct exptr{
@@ -97,7 +93,7 @@ struct exptr{
         } value;
     } expr_type;
 
-#line 101 "mycalc.tab.h"
+#line 97 "mycalc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
