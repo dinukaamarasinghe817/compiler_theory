@@ -530,8 +530,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    60,    60,    61,    69,    77,    93,   105,
-     108,   111,   128,   137
+       0,    58,    58,    59,    59,    60,    66,    72,    87,    99,
+     102,   105,   122,   131
 };
 #endif
 
@@ -1102,37 +1102,32 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* stmt: TINT TID  */
-#line 61 "mycalc.y"
+#line 60 "mycalc.y"
                {
     symTable[sym_count].name = strdup((yyvsp[0].variable_type).name);
     symTable[sym_count].type = 0;
     symTable[sym_count].address = malloc(sizeof(int));
-    (yyvsp[0].variable_type).type = 0;
     sym_count++;
-    //printf("after declaring %d\n",$2.type);
 }
-#line 1115 "mycalc.tab.c"
+#line 1113 "mycalc.tab.c"
     break;
 
   case 6: /* stmt: TFLOAT TID  */
-#line 69 "mycalc.y"
+#line 66 "mycalc.y"
              {
     symTable[sym_count].name = strdup((yyvsp[0].variable_type).name);
     symTable[sym_count].type = 1;
     symTable[sym_count].address = malloc(sizeof(float));
-    (yyvsp[0].variable_type).type = 1;
     sym_count++;
-    //printf("after declaring %d\n",$2.type);
 }
-#line 1128 "mycalc.tab.c"
+#line 1124 "mycalc.tab.c"
     break;
 
   case 7: /* stmt: TID TASSIGN expr  */
-#line 77 "mycalc.y"
+#line 72 "mycalc.y"
                    {
     if (findRecord((yyvsp[-2].variable_type).name)) {
         if (symTable[indexer].type == (yyvsp[0].expr_type).type) {
-            //$1.type = $3.type;
             if(symTable[indexer].type == 0){
                 *(int*)symTable[indexer].address = (yyvsp[0].expr_type).value.int_val;
             }else{
@@ -1145,11 +1140,11 @@ yyreduce:
         fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[-2].variable_type).name);
     }
 }
-#line 1149 "mycalc.tab.c"
+#line 1144 "mycalc.tab.c"
     break;
 
   case 8: /* stmt: TPRINTVAR TID  */
-#line 93 "mycalc.y"
+#line 87 "mycalc.y"
                 {
     if (findRecord((yyvsp[0].variable_type).name)) {
         if(symTable[indexer].type == 0){
@@ -1161,27 +1156,27 @@ yyreduce:
         fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[0].variable_type).name);
     }
 }
-#line 1165 "mycalc.tab.c"
+#line 1160 "mycalc.tab.c"
     break;
 
   case 9: /* expr: TINTVAL  */
-#line 105 "mycalc.y"
+#line 99 "mycalc.y"
               {
     (yyval.expr_type) = (struct exptr) { .type = 0, .value.int_val = (yyvsp[0].int_val) };
 }
-#line 1173 "mycalc.tab.c"
+#line 1168 "mycalc.tab.c"
     break;
 
   case 10: /* expr: TFLOATVAL  */
-#line 108 "mycalc.y"
+#line 102 "mycalc.y"
             {
     (yyval.expr_type) = (struct exptr) { .type = 1, .value.float_val = (yyvsp[0].float_val) };
 }
-#line 1181 "mycalc.tab.c"
+#line 1176 "mycalc.tab.c"
     break;
 
   case 11: /* expr: TID  */
-#line 111 "mycalc.y"
+#line 105 "mycalc.y"
       {
     if(findRecord((yyvsp[0].variable_type).name)){
         if(symTable[indexer].type == 0){
@@ -1199,11 +1194,11 @@ yyreduce:
         fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[0].variable_type).name);
     }
 }
-#line 1203 "mycalc.tab.c"
+#line 1198 "mycalc.tab.c"
     break;
 
   case 12: /* expr: expr TADD expr  */
-#line 128 "mycalc.y"
+#line 122 "mycalc.y"
                  { // E + E
     if((yyvsp[-2].expr_type).type != (yyvsp[0].expr_type).type){
         fprintf(stderr, "Line %d: invalid type of operands '%s' + '%s'\n",yylineno, (yyvsp[-2].expr_type).type == 0 ? "int" : "float", (yyvsp[0].expr_type).type == 0 ? "int" : "float");
@@ -1213,11 +1208,11 @@ yyreduce:
         (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val + (yyvsp[0].expr_type).value.float_val;
     }
 }
-#line 1217 "mycalc.tab.c"
+#line 1212 "mycalc.tab.c"
     break;
 
   case 13: /* expr: expr TMULT expr  */
-#line 137 "mycalc.y"
+#line 131 "mycalc.y"
                   { // E * E
     if((yyvsp[-2].expr_type).type != (yyvsp[0].expr_type).type){
         fprintf(stderr, "Line %d: invalid type of operands '%s' * '%s'\n",yylineno, (yyvsp[-2].expr_type).type == 0 ? "int" : "float", (yyvsp[0].expr_type).type == 0 ? "int" : "float");
@@ -1227,11 +1222,11 @@ yyreduce:
         (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val * (yyvsp[0].expr_type).value.float_val;
     }
 }
-#line 1231 "mycalc.tab.c"
+#line 1226 "mycalc.tab.c"
     break;
 
 
-#line 1235 "mycalc.tab.c"
+#line 1230 "mycalc.tab.c"
 
       default: break;
     }
@@ -1424,7 +1419,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 147 "mycalc.y"
+#line 141 "mycalc.y"
 
 
 void yyerror(const char* s) {

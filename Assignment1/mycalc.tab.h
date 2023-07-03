@@ -82,7 +82,6 @@ union YYSTYPE
 int int_val;
 float float_val;
 struct{
-    int type;
     char* name;
     } variable_type;
 struct exptr{
@@ -93,7 +92,7 @@ struct exptr{
         } value;
     } expr_type;
 
-#line 97 "mycalc.tab.h"
+#line 96 "mycalc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

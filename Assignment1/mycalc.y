@@ -32,7 +32,6 @@ int indexer = -1;
 int int_val;
 float float_val;
 struct{
-    int type;
     char* name;
     } variable_type;
 struct exptr{
@@ -62,22 +61,17 @@ stmt: TINT TID {
     symTable[sym_count].name = strdup($2.name);
     symTable[sym_count].type = 0;
     symTable[sym_count].address = malloc(sizeof(int));
-    $2.type = 0;
     sym_count++;
-    //printf("after declaring %d\n",$2.type);
 }
 | TFLOAT TID {
     symTable[sym_count].name = strdup($2.name);
     symTable[sym_count].type = 1;
     symTable[sym_count].address = malloc(sizeof(float));
-    $2.type = 1;
     sym_count++;
-    //printf("after declaring %d\n",$2.type);
 }
 | TID TASSIGN expr {
     if (findRecord($1.name)) {
         if (symTable[indexer].type == $3.type) {
-            //$1.type = $3.type;
             if(symTable[indexer].type == 0){
                 *(int*)symTable[indexer].address = $3.value.int_val;
             }else{
