@@ -1,13 +1,13 @@
-all: mycalc
+all: calc
 
-mycalc: mycalc.tab.c lex.yy.c
-	gcc -o mycalc mycalc.tab.c lex.yy.c -lfl
+mycalc: calc.tab.c lex.yy.c
+	gcc -o calc calc.tab.c lex.yy.c -lfl
 
-mycalc.tab.c: mycalc.y
-	bison -dv mycalc.y
+mycalc.tab.c: calc.y
+	bison -dv calc.y
 
-lex.yy.c: mycalc.l
-	flex -l mycalc.l
+lex.yy.c: calc.l
+	flex -l calc.l
 
 clean:
-	rm -f mycalc.tab.c mycalc.tab.h lex.yy.c mycalc.output mycalc
+	rm -f calc.tab.c calc.tab.h lex.yy.c calc.output calc

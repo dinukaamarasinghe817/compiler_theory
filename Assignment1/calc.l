@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "mycalc.tab.h"
+#include "calc.tab.h"
 %}
 
 digit [0-9]

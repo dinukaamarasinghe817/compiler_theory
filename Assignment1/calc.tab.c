@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "mycalc.y"
+#line 1 "calc.y"
 
 #include <stdio.h>
 #include <string.h>
@@ -92,7 +92,7 @@ int sym_count = 0;
 int indexer = -1;
 
 
-#line 96 "mycalc.tab.c"
+#line 96 "calc.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -115,7 +115,7 @@ int indexer = -1;
 #  endif
 # endif
 
-#include "mycalc.tab.h"
+#include "calc.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1102,29 +1102,29 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* stmt: TINT TID  */
-#line 60 "mycalc.y"
+#line 60 "calc.y"
                {
     symTable[sym_count].name = strdup((yyvsp[0].variable_type).name);
     symTable[sym_count].type = 0;
     symTable[sym_count].address = malloc(sizeof(int));
     sym_count++;
 }
-#line 1113 "mycalc.tab.c"
+#line 1113 "calc.tab.c"
     break;
 
   case 6: /* stmt: TFLOAT TID  */
-#line 66 "mycalc.y"
+#line 66 "calc.y"
              {
     symTable[sym_count].name = strdup((yyvsp[0].variable_type).name);
     symTable[sym_count].type = 1;
     symTable[sym_count].address = malloc(sizeof(float));
     sym_count++;
 }
-#line 1124 "mycalc.tab.c"
+#line 1124 "calc.tab.c"
     break;
 
   case 7: /* stmt: TID TASSIGN expr  */
-#line 72 "mycalc.y"
+#line 72 "calc.y"
                    {
     if (findRecord((yyvsp[-2].variable_type).name)) {
         if (symTable[indexer].type == (yyvsp[0].expr_type).type) {
@@ -1140,11 +1140,11 @@ yyreduce:
         fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[-2].variable_type).name);
     }
 }
-#line 1144 "mycalc.tab.c"
+#line 1144 "calc.tab.c"
     break;
 
   case 8: /* stmt: TPRINTVAR TID  */
-#line 87 "mycalc.y"
+#line 87 "calc.y"
                 {
     if (findRecord((yyvsp[0].variable_type).name)) {
         if(symTable[indexer].type == 0){
@@ -1156,27 +1156,27 @@ yyreduce:
         fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[0].variable_type).name);
     }
 }
-#line 1160 "mycalc.tab.c"
+#line 1160 "calc.tab.c"
     break;
 
   case 9: /* expr: TINTVAL  */
-#line 99 "mycalc.y"
+#line 99 "calc.y"
               {
     (yyval.expr_type) = (struct exptr) { .type = 0, .value.int_val = (yyvsp[0].int_val) };
 }
-#line 1168 "mycalc.tab.c"
+#line 1168 "calc.tab.c"
     break;
 
   case 10: /* expr: TFLOATVAL  */
-#line 102 "mycalc.y"
+#line 102 "calc.y"
             {
     (yyval.expr_type) = (struct exptr) { .type = 1, .value.float_val = (yyvsp[0].float_val) };
 }
-#line 1176 "mycalc.tab.c"
+#line 1176 "calc.tab.c"
     break;
 
   case 11: /* expr: TID  */
-#line 105 "mycalc.y"
+#line 105 "calc.y"
       {
     if(findRecord((yyvsp[0].variable_type).name)){
         if(symTable[indexer].type == 0){
@@ -1194,11 +1194,11 @@ yyreduce:
         fprintf(stderr, "Line %d: %s is used but is not declared\n",yylineno, (yyvsp[0].variable_type).name);
     }
 }
-#line 1198 "mycalc.tab.c"
+#line 1198 "calc.tab.c"
     break;
 
   case 12: /* expr: expr TADD expr  */
-#line 122 "mycalc.y"
+#line 122 "calc.y"
                  { // E + E
     if((yyvsp[-2].expr_type).type != (yyvsp[0].expr_type).type){
         fprintf(stderr, "Line %d: invalid type of operands '%s' + '%s'\n",yylineno, (yyvsp[-2].expr_type).type == 0 ? "int" : "float", (yyvsp[0].expr_type).type == 0 ? "int" : "float");
@@ -1208,11 +1208,11 @@ yyreduce:
         (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val + (yyvsp[0].expr_type).value.float_val;
     }
 }
-#line 1212 "mycalc.tab.c"
+#line 1212 "calc.tab.c"
     break;
 
   case 13: /* expr: expr TMULT expr  */
-#line 131 "mycalc.y"
+#line 131 "calc.y"
                   { // E * E
     if((yyvsp[-2].expr_type).type != (yyvsp[0].expr_type).type){
         fprintf(stderr, "Line %d: invalid type of operands '%s' * '%s'\n",yylineno, (yyvsp[-2].expr_type).type == 0 ? "int" : "float", (yyvsp[0].expr_type).type == 0 ? "int" : "float");
@@ -1222,11 +1222,11 @@ yyreduce:
         (yyval.expr_type).value.float_val = (yyvsp[-2].expr_type).value.float_val * (yyvsp[0].expr_type).value.float_val;
     }
 }
-#line 1226 "mycalc.tab.c"
+#line 1226 "calc.tab.c"
     break;
 
 
-#line 1230 "mycalc.tab.c"
+#line 1230 "calc.tab.c"
 
       default: break;
     }
@@ -1419,7 +1419,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 141 "mycalc.y"
+#line 141 "calc.y"
 
 
 void yyerror(const char* s) {

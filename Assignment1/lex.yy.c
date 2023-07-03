@@ -493,10 +493,10 @@ int yy_flex_debug = 0;
 
 char yytext[YYLMAX];
 char *yytext_ptr;
-#line 1 "mycalc.l"
-#line 2 "mycalc.l"
+#line 1 "calc.l"
+#line 2 "calc.l"
 #include <stdio.h>
-#include "mycalc.tab.h"
+#include "calc.tab.h"
 #line 501 "lex.yy.c"
 #line 502 "lex.yy.c"
 
@@ -715,7 +715,7 @@ YY_DECL
 		}
 
 	{
-#line 10 "mycalc.l"
+#line 10 "calc.l"
 
 
 #line 722 "lex.yy.c"
@@ -787,85 +787,85 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "mycalc.l"
+#line 12 "calc.l"
 {return(TMAIN); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "mycalc.l"
+#line 13 "calc.l"
 {return(TOCB); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "mycalc.l"
+#line 14 "calc.l"
 {return(TCCB); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "mycalc.l"
+#line 15 "calc.l"
 {return(TINT); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "mycalc.l"
+#line 16 "calc.l"
 {return(TFLOAT); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "mycalc.l"
+#line 17 "calc.l"
 { return(TPRINTVAR); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "mycalc.l"
+#line 18 "calc.l"
 { sscanf(yytext, "%f", &(yylval.float_val));
 return TFLOATVAL; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "mycalc.l"
+#line 20 "calc.l"
 { sscanf(yytext, "%d", &(yylval.int_val));
 return TINTVAL; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 22 "mycalc.l"
+#line 22 "calc.l"
 {return(TASSIGN); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "mycalc.l"
+#line 23 "calc.l"
 { return(TSEMICOLON); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "mycalc.l"
+#line 24 "calc.l"
 { return(TADD); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "mycalc.l"
+#line 25 "calc.l"
 { return(TMULT); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 26 "mycalc.l"
+#line 26 "calc.l"
 { yylval.variable_type.name = strdup(yytext); return TID; }
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 27 "mycalc.l"
+#line 27 "calc.l"
 ;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 28 "mycalc.l"
+#line 28 "calc.l"
 {}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 30 "mycalc.l"
+#line 30 "calc.l"
 ECHO;
 	YY_BREAK
 #line 872 "lex.yy.c"
@@ -1885,5 +1885,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 30 "mycalc.l"
+#line 30 "calc.l"
 
