@@ -8,7 +8,7 @@ Install Flex and Bison on your system. Flex is a lexical analyzer generator, and
 For Linux-based systems, you can install Flex and Bison using the package manager of your distribution. For example, on Ubuntu, you can run the following command:
 
 ```
-sudo apt-get install flex bison
+sudo apt-get install flex bison make
 ```
 
 
@@ -16,6 +16,7 @@ For macOS, you can install Flex and Bison using Homebrew. Run the following comm
 ```
 brew install flex
 brew install bison
+brew install make
 ```
 
 
