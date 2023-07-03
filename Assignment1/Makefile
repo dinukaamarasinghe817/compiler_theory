@@ -1,7 +1,4 @@
-all: run
-
-run: mycalc
-	./mycalc input
+all: mycalc
 
 mycalc: mycalc.tab.c lex.yy.c
 	gcc -o mycalc mycalc.tab.c lex.yy.c -lfl
