@@ -18,14 +18,22 @@ D.A Amarasinghe - 20000103 - 2020cs010@stu.ucsc.cmb.ac.lk
 
 # Special facts about the submission
 
-There are certain limitations in the given compiler preparation
+    i.  there is no maximum limit of variables since it's using a linked list as the symbol table
 
-    i.  maximum different variables the program supports is 100 due to the limitaiton of size in symbol table
+    ii. Error checking has been done for these errors
 
-    ii. Only supports addition and multiplication arithmetic operations since those are the ones given as the syntax in the first page of the assignment. But the program can extend further to perform substraction and division operations as well.
+        - Use before declaring
+        - Use before initializing
+        - Invalid type of operands for operators ( +, *, =)
+        - Multiple declarations for the same variable name
+        - Syntax errors
 
-    iii.Custom structures used in order to store names of variables and values of intermediate expressions.
+# There are certain limitations in the given compiler preparation
 
-    iv. Only supports 'int' and 'float' as variable types since those are the types given in the assignment instructions
+    i.  Only supports addition and multiplication arithmetic operations since those are the ones given as the syntax in the first page of the assignment. But the program can extend further to perform substraction and division operations as well.
 
-    v.  The program tested and performed correctly for the given syntax rules and sample test cases.
+    ii. Custom structures used in order to store names of variables and values of intermediate expressions.
+
+    iii.Only supports 'int' and 'float' as variable types since those are the types given in the assignment instructions
+    
+    iv. The program tested and performed correctly for the given syntax rules and sample test cases.
