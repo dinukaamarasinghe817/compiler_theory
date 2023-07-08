@@ -1,6 +1,6 @@
 # Names, Section and Emails
 D.A Amarasinghe - 20000103 - 2020cs010@stu.ucsc.cmb.ac.lk
-D.A Amarasinghe - 20000103 - 2020cs010@stu.ucsc.cmb.ac.lk
+K.D.P Gimhana   - 20000626 - 2020cs062@stu.ucsc.cmb.ac.lk
 
 # The Code was created on windows using WSL
 # The Code was tested on linux
@@ -8,13 +8,9 @@ D.A Amarasinghe - 20000103 - 2020cs010@stu.ucsc.cmb.ac.lk
 # Instruction to execute the code
     i.  open the terminal and navigate to current directory
 
-    ii. In the terminal type 'make' and hit enter
+    ii. In the terminal type 'make run' and hit enter
 
-    iii.Then type './calc input' and hit enter
-
-    iv. You'll receive an output according to the code you given inside the file 'input'
-
-    v.  Change the code in the 'input' file and redo steps (ii) and (iii) and check the output.
+    iii.Change the code in the 'input' file as desired and redo step (ii) and check the output.
 
 # Special facts about the submission
 
