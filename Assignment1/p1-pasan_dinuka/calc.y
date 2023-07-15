@@ -52,8 +52,8 @@ struct exptr{
 
 
 /*left associative*/
-%left TOK_MUL
-%left TOK_ADD
+%left TADD
+%left TMULT
 
 %%
 
@@ -155,8 +155,11 @@ expr: TINTVAL { // expr -> 3
         YYABORT;
     }else{
         $$.type = $1.type;
-        $$.value.int_val = $1.value.int_val + $3.value.int_val;
-        $$.value.float_val = $1.value.float_val + $3.value.float_val;
+        if($$.type == 0){
+            $$.value.int_val = $1.value.int_val + $3.value.int_val;
+        }else{
+            $$.value.float_val = $1.value.float_val + $3.value.float_val;
+        }
     }
 }
 | expr TMULT expr { // E * E
@@ -165,8 +168,11 @@ expr: TINTVAL { // expr -> 3
         YYABORT;
     }else{
         $$.type = $1.type;
-        $$.value.int_val = $1.value.int_val * $3.value.int_val;
-        $$.value.float_val = $1.value.float_val * $3.value.float_val;
+        if($$.type == 0){
+            $$.value.int_val = $1.value.int_val * $3.value.int_val;
+        }else{
+            $$.value.float_val = $1.value.float_val * $3.value.float_val;
+        }
     }
 }
 
