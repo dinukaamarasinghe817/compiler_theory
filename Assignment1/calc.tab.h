@@ -66,9 +66,7 @@ extern int yydebug;
     TASSIGN = 267,                 /* TASSIGN  */
     TSEMICOLON = 268,              /* TSEMICOLON  */
     TADD = 269,                    /* TADD  */
-    TMULT = 270,                   /* TMULT  */
-    TOK_MUL = 271,                 /* TOK_MUL  */
-    TOK_ADD = 272                  /* TOK_ADD  */
+    TMULT = 270                    /* TMULT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -92,7 +90,7 @@ struct exptr{
         } value;
     } expr_type;
 
-#line 96 "calc.tab.h"
+#line 94 "calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

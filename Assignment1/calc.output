@@ -1,13 +1,3 @@
-Terminals unused in grammar
-
-    TOK_MUL
-    TOK_ADD
-
-
-State 24 conflicts: 2 shift/reduce
-State 25 conflicts: 2 shift/reduce
-
-
 Grammar
 
     0 $accept: prog $end
@@ -46,24 +36,22 @@ Terminals, with rules where they appear
     TSEMICOLON (268) 2
     TADD (269) 11
     TMULT (270) 12
-    TOK_MUL (271)
-    TOK_ADD (272)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (18)
+    $accept (16)
         on left: 0
-    prog (19)
+    prog (17)
         on left: 1
         on right: 0
-    stmts (20)
+    stmts (18)
         on left: 2 3
         on right: 1 2
-    stmt (21)
+    stmt (19)
         on left: 4 5 6 7
         on right: 2
-    expr <expr_type> (22)
+    expr <expr_type> (20)
         on left: 8 9 10 11 12
         on right: 6 11 12
 
@@ -277,11 +265,8 @@ State 24
    11     | expr TADD expr •
    12     | expr • TMULT expr
 
-    TADD   shift, and go to state 22
     TMULT  shift, and go to state 23
 
-    TADD      [reduce using rule 11 (expr)]
-    TMULT     [reduce using rule 11 (expr)]
     $default  reduce using rule 11 (expr)
 
 
@@ -291,9 +276,4 @@ State 25
    12     | expr • TMULT expr
    12     | expr TMULT expr •
 
-    TADD   shift, and go to state 22
-    TMULT  shift, and go to state 23
-
-    TADD      [reduce using rule 12 (expr)]
-    TMULT     [reduce using rule 12 (expr)]
     $default  reduce using rule 12 (expr)
