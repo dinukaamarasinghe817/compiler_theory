@@ -221,26 +221,9 @@ void freeSpace(){
 }
 
 int main(int argc, char** argv) {
-    // expecting an input file name as the argument
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <input_file>\n", argv[0]);
-        return 1;
-    }
-    
-    // open the file
-    FILE* inputFile = fopen(argv[1], "r");
-    if (!inputFile) {
-        fprintf(stderr, "Error opening input file: %s\n", argv[1]);
-        return 1;
-    }
-    
-    yyin = inputFile;
-    yyparse();
-    
-    // close the file
-    fclose(inputFile);
 
-    // Free up the space on symbol table
+    yyin = stdin;
+    yyparse();
     freeSpace();
 
     return 0;
