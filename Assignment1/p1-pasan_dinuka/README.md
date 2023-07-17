@@ -6,11 +6,16 @@ K.D.P Gimhana   - 20000626 - 2020cs062@stu.ucsc.cmb.ac.lk
 # The Code was tested on linux
 
 # Instruction to execute the code
-    i.  open the terminal and navigate to current directory
+    i.  open the terminal and navigate to 'p1-pasan-dinuka' directory
 
-    ii. In the terminal type 'make run' and hit enter
+    ii. In the terminal type 'make run' or just 'make' and hit enter
 
-    iii.Change the code in the 'input' file as desired and redo step (ii) and check the output.
+    iii.That will create the executable file
+
+    iv. Change the code in the 'input' file as desired
+
+    v.  In the terminal type './calc < input' and check the output
+
 
 # Special facts about the submission
 
@@ -22,7 +27,7 @@ K.D.P Gimhana   - 20000626 - 2020cs062@stu.ucsc.cmb.ac.lk
         - Use before initializing
         - Invalid type of operands for operators ( +, *, =)
         - Multiple declarations for the same variable name
-        - Syntax errors
+        - Syntax errors for no matching grammar rules
 
 # There are certain limitations in the given compiler preparation
 

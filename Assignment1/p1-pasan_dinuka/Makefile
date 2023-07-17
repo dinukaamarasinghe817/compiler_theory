@@ -1,9 +1,6 @@
 all: run
 
-run: calc
-	@./calc < input
-
-calc: calc.tab.c lex.yy.c
+run: calc.tab.c lex.yy.c
 	@gcc -o calc calc.tab.c lex.yy.c -lfl
 
 calc.tab.c: calc.y

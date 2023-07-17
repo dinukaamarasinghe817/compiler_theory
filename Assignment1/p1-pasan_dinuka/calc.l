@@ -25,6 +25,6 @@ return TINTVAL; }
 "*" { return(TMULT); }
 {id} { yylval.variable_type.name = strdup(yytext); return TID; }
 {ws} ;
-. {}
+. { fprintf(stderr, "Syntax error at line %d: ' %s '\n", yylineno, yytext); exit(EXIT_FAILURE); }
 
 %%
